@@ -8,7 +8,7 @@ Author: c(person("Damien", "Jacques", role = "aut",  email = "damienjacquesUCL@g
 Maintainer: The package maintainer <damienjacquesUCL@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -16,4 +16,3 @@ Imports:
     raster
     rgdal
     plyr
-  
