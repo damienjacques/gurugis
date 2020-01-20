@@ -1,1 +1,1 @@
-# gurugis
+# gurugis - the voice of GISdom
