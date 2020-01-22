@@ -1,5 +1,5 @@
 
-# Gurugis - the voice of GISdom
+# Gurugis - the voice of GISdom <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 <!-- badges: end -->
