@@ -50,7 +50,7 @@ zonal_pipe <- function(r, z, stats, filename = NULL) {
     shp$ID <- 1:nrow(shp)
 
     # crop raster to 'zone' vector layer extent
-    r <- crop(r, raster::extent(shp))
+    r <- raster::crop(r, raster::extent(shp))
 
     # rasterize vector layer
     zone <- fasterize::fasterize(shp, raster(r), field = "ID")
