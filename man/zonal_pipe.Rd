@@ -4,21 +4,23 @@
 \alias{zonal_pipe}
 \title{Add together two numbers.}
 \usage{
-zonal_pipe(zone_in, raster_in, shp_out = NULL, stat)
+zonal_pipe(r, z, stats, filename = NULL)
 }
 \arguments{
-\item{x}{A number.}
+\item{r}{A raster file for which one wishes to compute zonal statistics}
 
-\item{y}{A number.}
+\item{z}{A vector layer (e.g. a shapefile) containing one polygon for each zone used to derive zonal statics (e.g. admnistrative areas)}
+
+\item{stats}{The function applied on all pixels of an area (i.e. the zonal statistics)}
 }
 \value{
-The sum of \code{x} and \code{y}.
+the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
 }
 \description{
 Add together two numbers.
 }
 \examples{
-zonal_pipe(1, 1)
-zonal_pipe(10, 1)
+output <- zonal_pipe(belgium, precipitation, stats = "mean")
+
 
 }

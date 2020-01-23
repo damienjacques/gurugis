@@ -1,4 +1,4 @@
-#' Add together two numbers.
+#' Fast implementation of zonal statistics
 #'
 #' @param x A number.
 #' @param z A number.
@@ -7,12 +7,12 @@
 #' add(1, 1)
 #' add(10, 1)
 
-my_zonal <- function(x, z, stat, digits = 0, na.rm = TRUE, ...) {
+fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
     # source: https://stat.ethz.ch/pipermail/r-sig-geo/2013-February/017475.html
-    fun <- match.fun(stat)
-    vals <- getValues(x)
-    zones <- round(getValues(z), digits = digits)
-    rDT <- data.table(vals, z = zones)
+    fun <- match.fun(stats)
+    vals <- raster::getValues(x)
+    zones <- round(raster::getValues(z), digits = digits)
+    rDT <- data.table::data.table(vals, z = zones)
     setkey(rDT, z)
     rDT[, lapply(.SD, fun, na.rm = TRUE), by = z]
 }
@@ -20,41 +20,55 @@ my_zonal <- function(x, z, stat, digits = 0, na.rm = TRUE, ...) {
 
 #' Add together two numbers.
 #'
-#' @param x A number.
-#' @param y A number.
-#' @return The sum of \code{x} and \code{y}.
+#' @param r A raster file for which one wishes to compute zonal statistics
+#' @param z A vector layer (e.g. a shapefile) containing one polygon for each zone used to derive zonal statics (e.g. admnistrative areas)
+#' @param stats The function applied on all pixels of an area (i.e. the zonal statistics)
+#' @filename stats The function applied on all pixels of an area (i.e. the zonal statistics)
+#' @return the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
 #' @examples
-#' zonal_pipe(1, 1)
-#' zonal_pipe(10, 1)
+#' output <- zonal_pipe(belgium, precipitation, stats = "mean")
+#'
 #'
 
+zonal_pipe <- function(r, z, stats, filename = NULL) {
+    # stack raster
+    r <- raster::stack(r)
 
-zonal_pipe <- function(zone_in, raster_in, shp_out = NULL, stat) {
-    # Load raster
-    r <- stack(raster_in)
-    # Load zone shapefile
-    shp <- shapefile(zone_in)
-    # Project 'zone' shapefile into the same coordinate system than the input raster
-    shp <- spTransform(shp, crs(r))
+    # read vector layer
+    if ("character" %in% is(z)){
+        shp <- st_read(z)
+    }else{
+        shp <- z
+    }
 
-    # Add ID field to Shapefile
-    shp@data$ID <- c(1:length(shp@data[, 1]))
+    # projecting the vector layer in the same coordinate system as the input raster
+    shp <- st_transform(shp, crs(r))
 
-    # Crop raster to 'zone' shapefile extent
+    # add ID field to vector layer
+    shp$ID <- 1:nrow(shp)
+
+    # crop raster to 'zone' vector layer extent
     r <- crop(r, extent(shp))
-    # Rasterize shapefile
-    zone <- rasterize(shp, r, field = "ID", dataType = "INT1U")  # Change dataType if nrow(shp) > 255 to INT2U or INT4U
 
-    # Zonal stats
-    Zstat <- data.frame(myZonal(r, zone, stat))
-    colnames(Zstat) <- c("ID", paste0(names(r), "_", c(1:(length(Zstat) - 1)), "_", stat))
+    # rasterize vector layer
+    zone <- fasterize::fasterize(shp, raster(r), field = "ID")
 
-    # Merge data in the shapefile and write it
-    shp@data <- plyr::join(shp@data, Zstat, by = "ID")
+    # perform zonal stats
+    zstat <- data.frame(fastzonal(r, zone, stats))
+    colnames(zstat) <- c("ID", paste0(names(r), "_", stats))
 
-    if (is.null(shp_out)) {
+    # merge the data into the vector layer
+    shp <- merge(shp, zstat, all = T)
+
+    # save vector layer or assign it to variable
+    if (is.null(filename)) {
         return(shp)
     } else {
-        shapefile(shp, shp_out)
+        shapefile(shp, filename)
     }
 }
+
+
+
+
+
