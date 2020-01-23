@@ -23,5 +23,4 @@ Perform raster zonal statistics from a vector zone layer and add the results to 
 }
 \examples{
 output <- zonal_pipe(precipitation, belgium, stats = "mean")
-
 }
