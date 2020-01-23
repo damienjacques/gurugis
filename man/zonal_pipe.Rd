@@ -13,15 +13,15 @@ zonal_pipe(r, z, stats, filename = NULL)
 
 \item{stats}{The function applied on all pixels of an area (i.e. the zonal statistics)}
 
-\item{filename}{stats The function applied on all pixels of an area (i.e. the zonal statistics)}
+\item{filename}{The path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).}
 }
 \value{
-the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
+A vector layer with the zonal statistics for each band of the input raster added in the attribute table
 }
 \description{
 Perform raster zonal statistics from a vector zone layer and add the results to the attribute layer of the vector layer.
 }
 \examples{
-output <- zonal_pipe(belgium, precipitation, stats = "mean")
+output <- zonal_pipe(precipitation, belgium, stats = "mean")
 
 }

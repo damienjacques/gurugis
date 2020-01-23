@@ -26,10 +26,10 @@ fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
 #' @param r A raster file for which one wishes to compute zonal statistics
 #' @param z A vector layer (e.g. a shapefile) containing one polygon for each zone used to derive zonal statics (e.g. admnistrative areas)
 #' @param stats The function applied on all pixels of an area (i.e. the zonal statistics)
-#' @param filename stats The function applied on all pixels of an area (i.e. the zonal statistics)
-#' @return the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
+#' @param filename The path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
+#' @return A vector layer with the zonal statistics for each band of the input raster added in the attribute table
 #' @examples
-#' output <- zonal_pipe(belgium, precipitation, stats = "mean")
+#' output <- zonal_pipe(precipitation, belgium, stats = "mean")
 #'
 #' @export
 
@@ -45,13 +45,13 @@ zonal_pipe <- function(r, z, stats, filename = NULL) {
     }
 
     # projecting the vector layer in the same coordinate system as the input raster
-    shp <- st_transform(shp, crs(r))
+    shp <- sf::st_transform(shp, raster::crs(r))
 
     # add ID field to vector layer
     shp$ID <- 1:nrow(shp)
 
     # crop raster to 'zone' vector layer extent
-    r <- crop(r, extent(shp))
+    r <- crop(r, raster::extent(shp))
 
     # rasterize vector layer
     zone <- fasterize::fasterize(shp, raster(r), field = "ID")
