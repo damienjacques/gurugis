@@ -10,7 +10,7 @@ euc_dist(m)
 \item{m}{matrix}
 }
 \value{
-The sum of \code{x} and \code{y}.
+matrix with Euclidean distance between all combination of rows
 }
 \description{
 This function returns Euclidean distance between all combination of rows of a data matrix. Much faster than 'dist' when you use large matrix (n> 100.000.000).

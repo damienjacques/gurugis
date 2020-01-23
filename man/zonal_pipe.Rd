@@ -2,7 +2,7 @@
 % Please edit documentation in R/zonal_stats.R
 \name{zonal_pipe}
 \alias{zonal_pipe}
-\title{Add together two numbers.}
+\title{Zonal statistics using a raster and a vector zone layer}
 \usage{
 zonal_pipe(r, z, stats, filename = NULL)
 }
@@ -12,15 +12,16 @@ zonal_pipe(r, z, stats, filename = NULL)
 \item{z}{A vector layer (e.g. a shapefile) containing one polygon for each zone used to derive zonal statics (e.g. admnistrative areas)}
 
 \item{stats}{The function applied on all pixels of an area (i.e. the zonal statistics)}
+
+\item{filename}{stats The function applied on all pixels of an area (i.e. the zonal statistics)}
 }
 \value{
 the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
 }
 \description{
-Add together two numbers.
+Perform raster zonal statistics from a vector zone layer and add the results to the attribute layer of the vector layer.
 }
 \examples{
 output <- zonal_pipe(belgium, precipitation, stats = "mean")
-
 
 }

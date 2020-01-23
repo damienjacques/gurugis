@@ -3,10 +3,11 @@
 #'  This function returns Euclidean distance between all combination of rows of a data matrix. Much faster than 'dist' when you use large matrix (n> 100.000.000).
 #'
 #' @param m matrix
-#' @return The sum of \code{x} and \code{y}.
+#' @return matrix with Euclidean distance between all combination of rows
 #' @examples
 #' M <-  matrix(rnorm(100), nrow = 5)
 #' euc_dist(M)
+#' @export
 
 euc_dist <- function(m) {
     mtm <- Matrix::tcrossprod(m)

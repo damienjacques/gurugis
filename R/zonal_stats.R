@@ -1,3 +1,4 @@
+
 #' Fast implementation of zonal statistics
 #'
 #' @param x A number.
@@ -6,7 +7,8 @@
 #' @examples
 #' add(1, 1)
 #' add(10, 1)
-
+#' @export
+#'
 fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
     # source: https://stat.ethz.ch/pipermail/r-sig-geo/2013-February/017475.html
     fun <- match.fun(stats)
@@ -17,18 +19,19 @@ fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
     rDT[, lapply(.SD, fun, na.rm = TRUE), by = z]
 }
 
-
-#' Add together two numbers.
+#' Zonal statistics using a raster and a vector zone layer
+#'
+#' Perform raster zonal statistics from a vector zone layer and add the results to the attribute layer of the vector layer.
 #'
 #' @param r A raster file for which one wishes to compute zonal statistics
 #' @param z A vector layer (e.g. a shapefile) containing one polygon for each zone used to derive zonal statics (e.g. admnistrative areas)
 #' @param stats The function applied on all pixels of an area (i.e. the zonal statistics)
-#' @filename stats The function applied on all pixels of an area (i.e. the zonal statistics)
+#' @param filename stats The function applied on all pixels of an area (i.e. the zonal statistics)
 #' @return the path where to write the vector layer with the result of the zonal statistics. If set to NULL returns the vector layer object (already).
 #' @examples
 #' output <- zonal_pipe(belgium, precipitation, stats = "mean")
 #'
-#'
+#' @export
 
 zonal_pipe <- function(r, z, stats, filename = NULL) {
     # stack raster
