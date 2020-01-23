@@ -7,6 +7,7 @@
 #' @examples
 #' add(1, 1)
 #' add(10, 1)
+#' @importFrom data.table "special-symbols"
 #' @export
 
 fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {

@@ -3,3 +3,4 @@
 export(euc_dist)
 export(fastzonal)
 export(zonal_pipe)
+importFrom(data.table,"special-symbols")
