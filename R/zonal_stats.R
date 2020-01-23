@@ -15,7 +15,7 @@ fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
     vals <- raster::getValues(x)
     zones <- round(raster::getValues(z), digits = digits)
     rDT <- data.table::data.table(vals, z = zones)
-    setkey(rDT, z)
+    data.table::setkey(rDT, z)
     rDT[, lapply(.SD, fun, na.rm = TRUE), by = z]
 }
 
@@ -38,7 +38,7 @@ zonal_pipe <- function(r, z, stats, filename = NULL) {
 
     # read vector layer
     if ("character" %in% is(z)){
-        shp <- st_read(z)
+        shp <- sf::st_read(z)
     }else{
         shp <- z
     }
@@ -66,7 +66,7 @@ zonal_pipe <- function(r, z, stats, filename = NULL) {
     if (is.null(filename)) {
         return(shp)
     } else {
-        shapefile(shp, filename)
+        sf::st_write(shp, filename)
     }
 }
 
