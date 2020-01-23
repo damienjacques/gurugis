@@ -8,7 +8,7 @@
 #' add(1, 1)
 #' add(10, 1)
 #' @export
-#'
+
 fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
     # source: https://stat.ethz.ch/pipermail/r-sig-geo/2013-February/017475.html
     fun <- match.fun(stats)
@@ -30,7 +30,6 @@ fastzonal <- function(x, z, stats, digits = 0, na.rm = TRUE, ...) {
 #' @return A vector layer with the zonal statistics for each band of the input raster added in the attribute table
 #' @examples
 #' output <- zonal_pipe(precipitation, belgium, stats = "mean")
-#'
 #' @export
 
 zonal_pipe <- function(r, z, stats, filename = NULL) {
