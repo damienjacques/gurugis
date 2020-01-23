@@ -31,9 +31,22 @@ devtools::install_github("damienjacques/gurugis")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to make quick zonal statistics from a raster and a vector layer describing the areas:
 
-```{r example, eval=FALSE}
+```{r example}
 library(gurugis)
-## basic example code
+library(raster)
+library(sf)
+
+# raster file for which I want to compute zonal statistics
+plot(precipitation)
+
+# vector layer with the zones
+plot(belgium[10], main = "Belgium ADM 3")
+
+# compute average of precipiation in each zone
+output <- zonal_pipe(precipitation, belgium, stats = "mean")
+
+# plot 6 first months
+plot(output[18:23])
 ```
