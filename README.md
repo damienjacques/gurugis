@@ -10,7 +10,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of gurugis is to provide a series of functions useful to the
-regular GIS spatial analysis workflow.
+advanced GIS spatial analysis workflow.
 
 ## Installation
 
