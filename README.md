@@ -25,7 +25,7 @@ devtools::install_github("damienjacques/gurugis")
 ## Example
 
 This is a basic example which shows you how to make quick zonal
-statistics from a raster and a vector layer describing the areas:
+statistics from a raster and a vector layer defining the areas:
 
 ``` r
 library(gurugis)
