@@ -9,7 +9,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of gurugis is to provide a series of functions useful to the
+The goal of gurugis is to provide a series of functions useful to
 advanced GIS spatial analysis workflow.
 
 ## Installation
